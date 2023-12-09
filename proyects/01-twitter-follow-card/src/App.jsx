@@ -5,11 +5,20 @@ function App() {
   return (
     <section className="App">
       <TwitterFollowCard
+        isFollowing={true}
         userName={"AdrianGermn1"}
-        name={"Adrian German Becerra"}
+        name={"Adrian German"}
       />
-      <TwitterFollowCard userName={"nilojeda"} name={"Nil Ojeda"} />
-      <TwitterFollowCard userName={"Andronews_net"} name={"Juan Hernandez"} />
+      <TwitterFollowCard
+        isFollowing={false}
+        userName={"nilojeda"}
+        name={"Nil Ojeda"}
+      />
+      <TwitterFollowCard
+        isFollowing
+        userName={"Andronews_net"}
+        name={"Juan Hernandez"}
+      />
     </section>
   );
 }
