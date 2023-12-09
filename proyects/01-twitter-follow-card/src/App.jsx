@@ -1,25 +1,15 @@
-import "/App.css";
+import { TwitterFollowCard } from "./TwitterFollowCard";
+import "./App.css";
 
 function App() {
   return (
     <>
-      <article className="tw-followCard">
-        <header className="tw-followCard-header">
-          <img
-            className="tw-followCard-avatar"
-            src="https://unavatar.io/goryheim"
-            alt="avatar persona 1"
-          />
-          <div className="tw-followCard-info">
-            <strong>Adrian German Becerra</strong>
-            <span className="tw-followCard-infoUsername">@gikariu</span>
-          </div>
-        </header>
-
-        <aside>
-          <button className="tw-followCard-button">Seguir</button>
-        </aside>
-      </article>
+      <TwitterFollowCard
+        userName={"AdrianGermn1"}
+        name={"Adrian German Becerra"}
+      />
+      <TwitterFollowCard userName={"nilojeda"} name={"Nil Ojeda"} />
+      <TwitterFollowCard userName={"Andronews_net"} name={"Juan Hernandez"} />
     </>
   );
 }
