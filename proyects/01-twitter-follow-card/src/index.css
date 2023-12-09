@@ -8,3 +8,9 @@ body {
   line-height: 1.5;
   color: aliceblue;
 }
+
+.App {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
