@@ -1,24 +1,19 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-export function TwitterFollowCard({
-  formatUserName,
-  userName,
-  name,
-  isFollowing,
-}) {
+export function TwitterFollowCard({ children, userName, isFollowing }) {
+  const addAt = (userName) => `@${userName}`;
+
   return (
     <>
       <article className="tw-followCard">
         <header className="tw-followCard-header">
           <img
             className="tw-followCard-avatar"
-            src={`https://unavatar.io/${formatUserName(userName)}`}
+            src={`https://unavatar.io/${addAt(userName)}`}
             alt="avatar persona 1"
           />
           <div className="tw-followCard-info">
-            <strong>{name}</strong>
+            <strong>{children}</strong>
             <span className="tw-followCard-infoUsername">
-              {formatUserName(userName)}
+              {addAt(userName)}
             </span>
           </div>
         </header>
