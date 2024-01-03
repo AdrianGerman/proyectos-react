@@ -4,13 +4,13 @@ import "./App.css";
 function App() {
   return (
     <section className="App">
-      <TwitterFollowCard userName={"AdrianGermn1"}>
+      <TwitterFollowCard userName={"AdrianGermn1"} initialIsFollowing>
         Adrian German
       </TwitterFollowCard>
 
       <TwitterFollowCard userName={"nilojeda"}>Nil Ojeda</TwitterFollowCard>
 
-      <TwitterFollowCard userName={"Andronews_net"}>
+      <TwitterFollowCard userName={"Andronews_net"} initialIsFollowing>
         Juan Hernandez
       </TwitterFollowCard>
 
