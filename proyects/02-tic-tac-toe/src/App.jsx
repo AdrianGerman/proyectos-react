@@ -82,10 +82,10 @@ function App() {
       <h1>Tic tac toe </h1>
       <button onClick={resetGame}>Reset del juego</button>
       <section className="game">
-        {board.map((_, index) => {
+        {board.map((square, index) => {
           return (
             <Square key={index} index={index} updateBoard={updateBoard}>
-              {board[index]}
+              {square}
             </Square>
           );
         })}
