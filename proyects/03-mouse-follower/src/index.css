@@ -59,15 +59,15 @@ button:focus-visible {
 
 .circle-cursor {
   position: absolute;
-  background-color: #09f;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid #aaa;
   border-radius: 50%;
-  opacity: 0.8;
+  opacity: 0.5;
   pointer-events: none;
-  left: -20px;
-  top: -20px;
-  width: 40px;
-  height: 40px;
-  transform: translate(0px 0px);
+  left: -25px;
+  top: -25px;
+  width: 50px;
+  height: 50px;
 }
 
 @media (prefers-color-scheme: light) {
