@@ -30,7 +30,6 @@ const FollowMouse = () => {
           transform: `translate(${position.x}px, ${position.y}px)`
         }}
       ></div>
-      <h3>Proyecto 3</h3>
       <button onClick={() => setEnabled(!enabled)}>
         {enabled ? "Desactivar" : "Activar"} seguir puntero
       </button>
@@ -39,11 +38,9 @@ const FollowMouse = () => {
 };
 
 function App() {
-  const [mounted, setMounted] = useState(true);
   return (
     <main>
-      {mounted && <FollowMouse />}
-      <button onClick={() => setMounted(!mounted)}>Toggle mounted</button>
+      <FollowMouse />
     </main>
   );
 }
