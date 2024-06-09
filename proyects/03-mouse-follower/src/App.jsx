@@ -17,6 +17,7 @@ const FollowMouse = () => {
     }
 
     return () => {
+      console.log("cleanup");
       window.removeEventListener("pointermove", handleMove);
     };
   }, [enabled]);
@@ -38,9 +39,11 @@ const FollowMouse = () => {
 };
 
 function App() {
+  const [mounted, setMounted] = useState(true);
   return (
     <main>
-      <FollowMouse />
+      {mounted && <FollowMouse />}
+      <button onClick={() => setMounted(!mounted)}>Toggle mounted</button>
     </main>
   );
 }
