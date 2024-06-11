@@ -16,15 +16,18 @@ function App() {
         setFact(fact);
 
         const threeFirstWords = fact.split(" ", 3).join(" ");
+        // split(" ")[0]
         // slice(0, 3).join("");
         console.log(threeFirstWords);
 
         fetch(`https://cataas.com/cat/says/${threeFirstWords}?size=50&color=red&json=true`)
           .then((res) => res.json())
           .then((response) => {
-            const { url } = response;
-            setImageUrl(`https://cataas.com${url}`);
+            const { _id } = response;
+            const url = `https://cataas.com/cat/${_id}/says/${threeFirstWords}`;
+            setImageUrl(url);
           });
+        // setImageUrl(`https://cataas.com/cat/says/${threeFirstWords}`);
       });
   }, []);
 
