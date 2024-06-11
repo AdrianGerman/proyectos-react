@@ -32,6 +32,11 @@ main {
   align-items: center;
 }
 
+img {
+  max-width: 620px;
+  height: auto;
+}
+
 /* estilos orientación horizontal */
 
 /* section {
