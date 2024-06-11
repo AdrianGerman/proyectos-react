@@ -1,6 +1,4 @@
-import { useState } from "react";
-import "./App.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const CAT_ENDPOINT_RANDOM_FACT = "https://catfact.ninja/fact";
 const CAT_PREFIX_IMAGE_URL = "https://cataas.com";
