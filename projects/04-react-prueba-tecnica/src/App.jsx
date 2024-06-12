@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
+import { getRandomFact } from "./services/facts";
 
-const CAT_ENDPOINT_RANDOM_FACT = "https://catfact.ninja/fact";
 const CAT_PREFIX_IMAGE_URL = "https://cataas.com";
 
 function App() {
@@ -9,12 +9,7 @@ function App() {
 
   // recuperar la cita al cargar la imagen
   useEffect(() => {
-    fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then((res) => res.json())
-      .then((data) => {
-        const { fact } = data;
-        setFact(fact);
-      });
+    getRandomFact().then(setFact);
   }, []);
 
   // recuperar la imagen cada vez que tenemos una cita nueva
@@ -35,13 +30,9 @@ function App() {
     // setImageUrl(`https://cataas.com/cat/says/${threeFirstWords}`);
   }, [fact]);
 
-  const handleClick = () => {
-    fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then((res) => res.json())
-      .then((data) => {
-        const { fact } = data;
-        setFact(fact);
-      });
+  const handleClick = async () => {
+    const newFact = await getRandomFact();
+    setFact(newFact);
   };
 
   return (
