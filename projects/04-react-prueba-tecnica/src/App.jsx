@@ -35,9 +35,19 @@ function App() {
     // setImageUrl(`https://cataas.com/cat/says/${threeFirstWords}`);
   }, [fact]);
 
+  const handleClick = () => {
+    fetch(CAT_ENDPOINT_RANDOM_FACT)
+      .then((res) => res.json())
+      .then((data) => {
+        const { fact } = data;
+        setFact(fact);
+      });
+  };
+
   return (
     <main>
       <h1>App de gatitos</h1>
+      <button onClick={handleClick}>Get new fact</button>
       {fact && <p>{fact}</p>}
       {imageUrl && (
         <img
