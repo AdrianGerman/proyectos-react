@@ -3,15 +3,8 @@ import { getRandomFact } from "./services/facts";
 
 const CAT_PREFIX_IMAGE_URL = "https://cataas.com";
 
-function App() {
-  const [fact, setFact] = useState();
+function useCatImage({ fact }) {
   const [imageUrl, setImageUrl] = useState();
-
-  // recuperar la cita al cargar la imagen
-  useEffect(() => {
-    getRandomFact().then(setFact);
-  }, []);
-
   // recuperar la imagen cada vez que tenemos una cita nueva
   useEffect(() => {
     if (!fact) return;
@@ -29,6 +22,18 @@ function App() {
       });
     // setImageUrl(`https://cataas.com/cat/says/${threeFirstWords}`);
   }, [fact]);
+
+  return { imageUrl };
+}
+
+function App() {
+  const [fact, setFact] = useState();
+  const { imageUrl } = useCatImage({ fact });
+
+  // recuperar la cita al cargar la imagen
+  useEffect(() => {
+    getRandomFact().then(setFact);
+  }, []);
 
   const handleClick = async () => {
     const newFact = await getRandomFact();
