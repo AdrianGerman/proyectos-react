@@ -4,18 +4,25 @@ import { useCatImage } from "./hooks/useCatImage";
 
 const CAT_PREFIX_IMAGE_URL = "https://cataas.com";
 
-function App() {
+const useCatFact = () => {
   const [fact, setFact] = useState();
-  const { imageUrl } = useCatImage({ fact });
+
+  const refreshFact = () => {
+    getRandomFact().then((newFact) => setFact(newFact));
+  };
 
   // recuperar la cita al cargar la imagen
-  useEffect(() => {
-    getRandomFact().then(setFact);
-  }, []);
+  useEffect(refreshFact, []);
+
+  return { fact, refreshFact };
+};
+
+function App() {
+  const { fact, refreshFact } = useCatFact();
+  const { imageUrl } = useCatImage({ fact });
 
   const handleClick = async () => {
-    const newFact = await getRandomFact();
-    setFact(newFact);
+    refreshFact();
   };
 
   return (
