@@ -652,6 +652,7 @@ input[type="range"],
 select,
 button,
 textarea {
+  appearance: auto;
   -webkit-appearance: none;
 }
 
