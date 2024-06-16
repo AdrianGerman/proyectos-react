@@ -3,37 +3,43 @@ import { useMovies } from "./hooks/useMovies";
 import "./App.css";
 import { useEffect, useState } from "react";
 
+function useSearch() {
+  const [search, updateSearch] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (search == "") {
+      setError("No se puede buscar una película vacía");
+      return;
+    }
+    if (search.match(/^\d+$/)) {
+      setError("No se puede buscar una película solo con el número");
+      return;
+    }
+    if (search.length < 3) {
+      setError("La búsqueda debe tener al menos 3 caracteres");
+      return;
+    }
+    setError(null);
+  }, [search]);
+  return { search, updateSearch, error };
+}
+
 function App() {
   const { movies } = useMovies();
-  const [query, setQuery] = useState("");
-  const [error, setError] = useState("");
+  // const [query, setQuery] = useState("");
+  const { search, updateSearch, error } = useSearch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ query });
+    console.log({ search });
   };
 
   const handleChange = (event) => {
     const newQuery = event.target.value;
     if (newQuery.startsWith(" ")) return;
-    setQuery(event.target.value);
+    updateSearch(event.target.value);
   };
-
-  useEffect(() => {
-    if (query == "") {
-      setError("No se puede buscar una película vacía");
-      return;
-    }
-    if (query.match(/^\d+$/)) {
-      setError("No se puede buscar una película solo con el número");
-      return;
-    }
-    if (query.length < 3) {
-      setError("La búsqueda debe tener al menos 3 caracteres");
-      return;
-    }
-    setError(null);
-  }, [query]);
 
   return (
     <>
@@ -47,7 +53,7 @@ function App() {
                 borderColor: error ? "red" : "transparent"
               }}
               onChange={handleChange}
-              value={query}
+              value={search}
               name="query"
               type="text"
               placeholder="Avengers, superman, the matrix..."
