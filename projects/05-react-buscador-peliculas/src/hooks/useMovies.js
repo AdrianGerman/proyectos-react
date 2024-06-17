@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import { searchMovies } from "../services/movies";
 
 export function useMovies({ search, sort }) {
@@ -22,10 +22,15 @@ export function useMovies({ search, sort }) {
     }
   };
 
-  const getSortedMovies = () => {
-    const sortedMovies = sort ? [...movies].sort((a, b) => a.title.localeCompare(b.title)) : movies;
-    return sortedMovies;
-  };
+  // const getSortedMovies = () => {
+  //   const sortedMovies = sort ? [...movies].sort((a, b) => a.title.localeCompare(b.title)) : movies;
+  //   return sortedMovies;
+  // };
 
-  return { movies: getSortedMovies(movies), getMovies, loading };
+  const sortedMovies = useMemo(() => {
+    console.log("cambio");
+    return sort ? [...movies].sort((a, b) => a.title.localeCompare(b.title)) : movies;
+  }, [sort, movies]);
+
+  return { movies: sortedMovies, getMovies, loading, error };
 }
