@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Movies } from "./components/Movies";
 import { useMovies } from "./hooks/useMovies";
 import "./App.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
+import debounce from "just-debounce-it";
 
 function useSearch() {
   const [search, updateSearch] = useState("");
@@ -35,6 +37,14 @@ function App() {
   const { search, updateSearch, error } = useSearch();
   const { movies, getMovies, loading } = useMovies({ search, sort });
 
+  const debouncedGetMovies = useCallback(
+    debounce((search) => {
+      console.log("search", search);
+      getMovies({ search });
+    }, 300),
+    [getMovies]
+  );
+
   const handleSubmit = (event) => {
     event.preventDefault();
     getMovies({ search });
@@ -45,7 +55,7 @@ function App() {
     const newQuery = event.target.value;
     if (newQuery.startsWith(" ")) return;
     updateSearch(event.target.value);
-    getMovies({ search: newSearch });
+    debouncedGetMovies(newSearch);
   };
 
   const handleSort = () => {
