@@ -37,13 +37,15 @@ function App() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    getMovies(search);
+    getMovies({ search });
   };
 
   const handleChange = (event) => {
+    const newSearch = event.target.value;
     const newQuery = event.target.value;
     if (newQuery.startsWith(" ")) return;
     updateSearch(event.target.value);
+    getMovies({ search: newSearch });
   };
 
   const handleSort = () => {
