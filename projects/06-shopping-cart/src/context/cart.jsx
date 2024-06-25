@@ -22,11 +22,18 @@ export function CartProvider({ children }) {
       }
     ]);
   };
+
+  const removeFromCart = (product) => {
+    setCart((prevState) => prevState.filter((item) => item.id !== product.id));
+  };
+
   const clearCart = () => {
     setCart([]);
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, clearCart }}>{children}</CartContext.Provider>
+    <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart }}>
+      {children}
+    </CartContext.Provider>
   );
 }
