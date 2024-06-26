@@ -1,38 +1,59 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
 
 export const CartContext = createContext();
 
-export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
-
-  const addToCart = (product) => {
-    const productInCartIndex = cart.findIndex((item) => item.id === product.id);
-
-    if (productInCartIndex >= 0) {
-      const nweCart = structuredClone(cart);
-      nweCart[productInCartIndex].quantity += 1;
-      return setCart(nweCart);
-    }
-    setCart((prevState) => [
-      ...prevState,
-      {
-        ...product,
-        quantity: 1
+const initialState = [];
+const reducer = (state, action) => {
+  const { type: actionType, payload: actionPayload } = action;
+  switch (actionType) {
+    case "ADD_TO_CART": {
+      const { id } = actionPayload;
+      const productInCartIndex = state.findIndex((item) => item.id === id);
+      if (productInCartIndex >= 0) {
+        const newState = structuredClone(state);
+        newState[productInCartIndex].quantity += 1;
+        return newState;
       }
-    ]);
-  };
+      return [
+        ...state,
+        {
+          ...actionPayload, //product
+          quantity: 1
+        }
+      ];
+    }
 
-  const removeFromCart = (product) => {
-    setCart((prevState) => prevState.filter((item) => item.id !== product.id));
-  };
+    case "REMOVE_FROM_CART": {
+      const { id } = actionPayload;
+      return state.filter((item) => item.id !== id);
+    }
 
-  const clearCart = () => {
-    setCart([]);
-  };
+    case "CLEAR_CART": {
+      return initialState;
+    }
+  }
+};
+
+export function CartProvider({ children }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const addToCart = (product) =>
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: product
+    });
+
+  const removeFromCart = (product) =>
+    dispatch({
+      type: "REMOVE_FROM_CART",
+      payload: product
+    });
+
+  const clearCart = () => dispatch({ type: "CLEAN_CART" });
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, clearCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart: state, addToCart, clearCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
