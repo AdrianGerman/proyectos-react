@@ -16,8 +16,28 @@ const UPDATE_STATE_BY_ACTION = {
     const { id } = action.payload;
     const productInCartIndex = state.findIndex((item) => item.id === id);
     if (productInCartIndex >= 0) {
-      const newState = structuredClone(state);
-      newState[productInCartIndex].quantity += 1;
+      // ------- una forma seria utilizando structuredClone -------
+      // const newState = structuredClone(state);
+      // newState[productInCartIndex].quantity += 1;
+
+      // ------- usando el .map -------
+      // const newState = state.map((item) => {
+      //   if (item.id === id) {
+      //     return {
+      //       ...item,
+      //       quantity: item.quantity + 1
+      //     };
+      //   }
+      //   return item;
+      // });
+
+      // ------- usando spread operator y slice -------
+      const newState = [
+        ...state.slice(0, productInCartIndex),
+        { ...state[productInCartIndex], quantity: state[productInCartIndex].quantity + 1 },
+        ...state.slice(productInCartIndex + 1)
+      ];
+
       updateLocalStorage(newState);
       return newState;
     }
@@ -41,11 +61,11 @@ const UPDATE_STATE_BY_ACTION = {
   },
 
   [CART_ACTION_TYPES.CLEAR_CART]: () => {
-    // updateLocalStorage(cartInitialState);
-    // return cartInitialState;
-    const newState = [];
-    updateLocalStorage(newState);
-    return newState;
+    updateLocalStorage();
+    return [];
+    // const newState = [];
+    // updateLocalStorage(newState);
+    // return newState;
   }
 };
 
