@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 
 function HomePage() {
@@ -5,7 +6,7 @@ function HomePage() {
     <>
       <h1>Home</h1>
       <p>Esta es una página de ejemplo para crear un React Router desde cero</p>
-      <a href="/about">Ir a Sobre Nosotros</a>
+      <a href="/about">Ir a sobre nosotros</a>
     </>
   );
 }
@@ -27,10 +28,11 @@ function AboutPage() {
 }
 
 function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   return (
     <>
-      <HomePage />
-      <AboutPage />
+      {currentPath === "/" && <HomePage />}
+      {currentPath === "/about" && <AboutPage />}
     </>
   );
 }
