@@ -4,6 +4,7 @@ import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
 import "./App.css";
 import Page404 from "./pages/404";
+import SearchPage from "./pages/Search";
 
 const appRoutes = [
   {
@@ -16,7 +17,7 @@ const appRoutes = [
   },
   {
     path: "/search/:query",
-    Component: ({ routeParams }) => <h1>Has buscado: {routeParams.query}</h1>
+    Component: SearchPage
   }
 ];
 
