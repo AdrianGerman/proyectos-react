@@ -1,21 +1,15 @@
-/* eslint-disable react/prop-types */
+import "./App.css";
+import SearchPage from "./pages/Search";
+import Page404 from "./pages/404";
 import { Router } from "./Router";
 import { Route } from "./Route";
-import HomePage from "./pages/Home";
-import AboutPage from "./pages/About";
-import "./App.css";
-import Page404 from "./pages/404";
-import SearchPage from "./pages/Search";
+import { Suspense, lazy } from "react";
+
+// importaciones lazy
+const HomePage = lazy(() => import("./pages/Home"));
+const AboutPage = lazy(() => import("./pages/About"));
 
 const appRoutes = [
-  {
-    path: "/",
-    Component: HomePage
-  },
-  {
-    path: "/about",
-    Component: AboutPage
-  },
   {
     path: "/search/:query",
     Component: SearchPage
@@ -25,10 +19,12 @@ const appRoutes = [
 function App() {
   return (
     <>
-      <Router routes={appRoutes} defaultComponent={Page404}>
-        <Route path="/" Component={HomePage} />
-        <Route path="/about" Component={AboutPage} />
-      </Router>
+      <Suspense fallback={null}>
+        <Router routes={appRoutes} defaultComponent={Page404}>
+          <Route path="/" Component={HomePage} />
+          <Route path="/about" Component={AboutPage} />
+        </Router>
+      </Suspense>
     </>
   );
 }
