@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Router } from "./Router";
 import HomePage from "./pages/Home";
 import AboutPage from "./pages/About";
@@ -14,8 +15,8 @@ const appRoutes = [
     Component: AboutPage
   },
   {
-    path: "/example",
-    Component: () => <h1>Example route</h1>
+    path: "/search/:query",
+    Component: ({ routeParams }) => <h1>Has buscado: {routeParams.query}</h1>
   }
 ];
 
