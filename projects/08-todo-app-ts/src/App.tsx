@@ -1,21 +1,20 @@
 import { useState } from "react";
-import "./App.css";
 import { Todos } from "./components/Todos";
 
 const mockTodos = [
   {
     id: "1",
-    title: "todo 1",
-    completed: false
+    title: "Ver la web de React",
+    completed: true
   },
   {
     id: "2",
-    title: "todo 2",
+    title: "Aprender a dejar de hacer webs con el fondo white",
     completed: false
   },
   {
     id: "3",
-    title: "todo 3",
+    title: "Buscar la temporada de huracanes",
     completed: false
   }
 ];
@@ -23,9 +22,9 @@ const mockTodos = [
 const App = (): JSX.Element => {
   const [todos] = useState(mockTodos);
   return (
-    <>
+    <div className="todoapp">
       <Todos todos={todos} />
-    </>
+    </div>
   );
 };
 
