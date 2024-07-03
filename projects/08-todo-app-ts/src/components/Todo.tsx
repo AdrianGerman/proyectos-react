@@ -12,6 +12,12 @@ export const Todo: React.FC<Props> = ({
   onRemoveTodo,
   onToggleCompletedTodo
 }) => {
+  const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onToggleCompletedTodo({
+      id,
+      completed: event.target.checked
+    });
+  };
   return (
     <>
       <div className="view">
@@ -19,9 +25,7 @@ export const Todo: React.FC<Props> = ({
           className="toggle"
           type="checkbox"
           checked={completed}
-          onChange={(event) => {
-            onToggleCompletedTodo({ id, completed: event.target.checked });
-          }}
+          onChange={handleChangeCheckbox}
         />
         <label>{title}</label>
         <button
