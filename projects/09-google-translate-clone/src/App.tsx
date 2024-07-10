@@ -7,13 +7,14 @@ import { ArrowsIcon } from "./components/Icons";
 import { LanguageSelector } from "./components/LanguageSelector";
 
 function App() {
-  const { fromLanguage, toLanguage, interchangeLanguages } = useStore();
+  const { fromLanguage, toLanguage, interchangeLanguages, setFromLanguage, setToLanguage } =
+    useStore();
   return (
     <Container fluid>
       <h1>Google translate</h1>
       <Row>
         <Col>
-          <LanguageSelector />
+          <LanguageSelector type="from" value={fromLanguage} onChange={setFromLanguage} />
           {fromLanguage}
         </Col>
         <Col>
@@ -26,7 +27,7 @@ function App() {
           </Button>
         </Col>
         <Col>
-          <LanguageSelector />
+          <LanguageSelector type="to" value={toLanguage} onChange={setToLanguage} />
           {toLanguage}
         </Col>
       </Row>
