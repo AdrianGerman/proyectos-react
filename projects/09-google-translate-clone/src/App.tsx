@@ -3,7 +3,7 @@ import "./App.css";
 import { useStore } from "./hooks/useStore";
 
 function App() {
-  const { setFromLanguage } = useStore();
+  const { setFromLanguage, fromLanguage } = useStore();
   return (
     <>
       <div>
@@ -15,6 +15,7 @@ function App() {
         >
           Cambiar loading
         </button>
+        {fromLanguage}
       </div>
     </>
   );
