@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { useStore } from "./hooks/useStore";
-import { Container, Row, Col, Button, Form, Stack } from "react-bootstrap";
+import { Container, Row, Col, Button, Stack } from "react-bootstrap";
 import { AUTO_LANGUAGE } from "./constants";
 import { ArrowsIcon } from "./components/Icons";
 import { LanguageSelector } from "./components/LanguageSelector";
