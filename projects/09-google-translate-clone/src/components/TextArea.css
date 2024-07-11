@@ -1,0 +1,15 @@
+.textarea {
+  background-color: #242424;
+  color: white;
+  border: 1px solid #414141;
+  resize: none;
+}
+
+.textarea:focus {
+  background-color: #252525;
+  color: white;
+}
+
+.textarea::placeholder {
+  color: white;
+}
