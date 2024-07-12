@@ -39,9 +39,10 @@ function reducer(state: State, action: Action) {
   if (type === "SET_TO_LANGUAGES") {
     if (state.toLanguage === action.payload) return state;
     const loading = state.fromText !== "";
+
     return {
       ...state,
-      toLanguages: action.payload,
+      toLanguage: action.payload,
       result: "",
       loading
     };
