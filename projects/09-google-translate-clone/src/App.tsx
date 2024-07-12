@@ -3,7 +3,7 @@ import "./App.css";
 import { useStore } from "./hooks/useStore";
 import { Container, Row, Col, Button, Stack } from "react-bootstrap";
 import { AUTO_LANGUAGE } from "./constants";
-import { ArrowsIcon } from "./components/Icons";
+import { ArrowsIcon, ClipboardIcon } from "./components/Icons";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { SectionType } from "./types.d";
 import { TextArea } from "./components/TextArea";
@@ -24,6 +24,10 @@ function App() {
     setFromText,
     setResult
   } = useStore();
+
+  const handleClipboard = () => {
+    navigator.clipboard.writeText(result).catch(() => {});
+  };
 
   const debouncedFromText = useDebounce(fromText, 300);
 
@@ -66,7 +70,17 @@ function App() {
         <Col>
           <Stack gap={2}>
             <LanguageSelector type={SectionType.To} value={toLanguage} onChange={setToLanguage} />
-            <TextArea loading={loading} type={SectionType.To} value={result} onChange={setResult} />
+            <div className="toInput">
+              <TextArea
+                loading={loading}
+                type={SectionType.To}
+                value={result}
+                onChange={setResult}
+              />
+              <Button variant="link" onClick={handleClipboard}>
+                <ClipboardIcon />
+              </Button>
+            </div>
           </Stack>
         </Col>
       </Row>
