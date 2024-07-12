@@ -29,6 +29,12 @@ function App() {
     navigator.clipboard.writeText(result).catch(() => {});
   };
 
+  const handleSpeak = () => {
+    const utterance = new SpeechSynthesisUtterance(result);
+    utterance.lang = toLanguage;
+    speechSynthesis.speak(utterance);
+  };
+
   const debouncedFromText = useDebounce(fromText, 300);
 
   useEffect(() => {
@@ -81,7 +87,7 @@ function App() {
                 <Button variant="link" onClick={handleClipboard}>
                   <ClipboardIcon />
                 </Button>
-                <Button variant="link" onClick={handleClipboard}>
+                <Button variant="link" onClick={handleSpeak}>
                   <SpeakerIcon />
                 </Button>
               </div>
