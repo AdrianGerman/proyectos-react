@@ -3,7 +3,7 @@ import "./App.css";
 import { useStore } from "./hooks/useStore";
 import { Container, Row, Col, Button, Stack } from "react-bootstrap";
 import { AUTO_LANGUAGE } from "./constants";
-import { ArrowsIcon, ClipboardIcon } from "./components/Icons";
+import { ArrowsIcon, ClipboardIcon, SpeakerIcon } from "./components/Icons";
 import { LanguageSelector } from "./components/LanguageSelector";
 import { SectionType } from "./types.d";
 import { TextArea } from "./components/TextArea";
@@ -77,9 +77,14 @@ function App() {
                 value={result}
                 onChange={setResult}
               />
-              <Button variant="link" onClick={handleClipboard}>
-                <ClipboardIcon />
-              </Button>
+              <div className="button-link">
+                <Button variant="link" onClick={handleClipboard}>
+                  <ClipboardIcon />
+                </Button>
+                <Button variant="link" onClick={handleClipboard}>
+                  <SpeakerIcon />
+                </Button>
+              </div>
             </div>
           </Stack>
         </Col>

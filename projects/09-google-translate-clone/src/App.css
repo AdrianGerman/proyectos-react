@@ -13,7 +13,8 @@ body {
   position: relative;
 }
 
-.toInput Button {
+.button-link {
+  display: flex;
   position: absolute;
   left: 0;
   bottom: 0;
