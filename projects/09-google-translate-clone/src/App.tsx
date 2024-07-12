@@ -8,6 +8,7 @@ import { LanguageSelector } from "./components/LanguageSelector";
 import { SectionType } from "./types.d";
 import { TextArea } from "./components/TextArea";
 import { useEffect } from "react";
+import { useDebounce } from "./hooks/useDebounce";
 import { translate } from "./services/translate";
 
 function App() {
@@ -24,9 +25,11 @@ function App() {
     setResult
   } = useStore();
 
+  const debouncedFromText = useDebounce(fromText, 300);
+
   useEffect(() => {
-    if (fromText === "") return;
-    translate({ fromLanguage, toLanguage, text: fromText })
+    if (debouncedFromText === "") return;
+    translate({ fromLanguage, toLanguage, text: debouncedFromText })
       .then((result) => {
         if (result == null) return;
         setResult(result);
@@ -34,7 +37,7 @@ function App() {
       .catch(() => {
         setResult("Error");
       });
-  }, [fromText]);
+  }, [debouncedFromText, fromLanguage, toLanguage]);
   return (
     <Container fluid>
       <h2>Google translate</h2>
