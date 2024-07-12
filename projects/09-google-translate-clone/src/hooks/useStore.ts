@@ -23,23 +23,32 @@ function reducer(state: State, action: Action) {
   }
 
   if (type === "SET_FROM_LANGUAGES") {
+    if (state.fromLanguage === action.payload) return state;
+    const loading = state.fromText !== "";
     return {
       ...state,
-      fromLanguage: action.payload
+      fromLanguage: action.payload,
+      result: "",
+      loading
     };
   }
 
   if (type === "SET_TO_LANGUAGES") {
+    if (state.toLanguage === action.payload) return state;
+    const loading = state.fromText !== "";
     return {
       ...state,
-      toLanguages: action.payload
+      toLanguages: action.payload,
+      result: "",
+      loading
     };
   }
 
   if (type === "SET_FROM_TEXT") {
+    const loading = action.payload !== "";
     return {
       ...state,
-      loading: true,
+      loading,
       fromText: action.payload,
       result: ""
     };
