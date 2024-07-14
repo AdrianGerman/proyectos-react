@@ -10,39 +10,10 @@ import {
   Badge
 } from "@tremor/react"
 
-const users: {
-  id: string
-  name: string
-  email: string
-  github: string
-}[] = [
-  {
-    id: "1",
-    name: "Eladrino",
-    email: "eladrianoveloz@gmail.com",
-    github: "ElAdriano"
-  },
-  {
-    id: "2",
-    name: "Jacquie Blanca",
-    email: "julinadaotod@gmail.com",
-    github: "Jacquie"
-  },
-  {
-    id: "3",
-    name: "Liz Rodriguez",
-    email: "lizlopez@gmail.com",
-    github: "Liz"
-  },
-  {
-    id: "4",
-    name: "Evalionte Lopez",
-    email: "elvistek@gmail.com",
-    github: "elvistek"
-  }
-]
+import { useSelector, UseSelector } from "react-redux"
 
 export function ListOfUsers() {
+  const users = useSelector((state) => state.users)
   return (
     <Card className="rounded-lg">
       <Title>
