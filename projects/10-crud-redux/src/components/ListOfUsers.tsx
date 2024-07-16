@@ -17,22 +17,22 @@ export function ListOfUsers() {
   const { removeUser } = useUserActions()
 
   return (
-    <Card className="rounded-lg">
-      <Title>
+    <Card className="bg-backgroundBlack">
+      <Title className="text-white">
         Usuarios
         <Badge className="ml-2 rounded-full bg-slate-600">{users.length}</Badge>
       </Title>
       <Table>
         <TableHead>
           <TableRow>
-            <TableHeaderCell>Id</TableHeaderCell>
-            <TableHeaderCell>Nombre</TableHeaderCell>
-            <TableHeaderCell>Correo</TableHeaderCell>
-            <TableHeaderCell>Acciones</TableHeaderCell>
+            <TableHeaderCell className="text-white">Id</TableHeaderCell>
+            <TableHeaderCell className="text-white">Nombre</TableHeaderCell>
+            <TableHeaderCell className="text-white">Correo</TableHeaderCell>
+            <TableHeaderCell className="text-white">Acciones</TableHeaderCell>
           </TableRow>
         </TableHead>
 
-        <TableBody>
+        <TableBody className="text-white">
           {users.map((item) => (
             <TableRow key={item.name}>
               <TableCell>{item.id}</TableCell>

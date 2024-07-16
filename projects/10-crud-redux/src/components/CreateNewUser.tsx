@@ -25,15 +25,17 @@ export function CreateNewUser() {
   }
 
   return (
-    <Card className="rounded-lg">
-      <Title>Create new user</Title>
-      <form onSubmit={handleSubmit} className="">
+    <Card className="bg-backgroundBlack">
+      <Title className="text-white">Create new user</Title>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-4">
         <TextInput name="name" placeholder="name" />
         <TextInput name="email" placeholder="email" />
         <TextInput name="github" placeholder="github user" />
 
         <div>
-          <Button type="submit">Create</Button>
+          <Button type="submit" className="mt-4">
+            Create
+          </Button>
           <span>{result === "ok" && <Badge color="green">Guardado correctamente</Badge>}</span>
           <span>{result === "ko" && <Badge color="red">Error con los campos</Badge>}</span>
         </div>

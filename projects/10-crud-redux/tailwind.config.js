@@ -7,7 +7,11 @@ export default {
     "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        backgroundBlack: '#242424'
+      }
+    }
   },
   plugins: []
 }
