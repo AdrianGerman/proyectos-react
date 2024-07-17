@@ -20,7 +20,7 @@ export function ListOfUsers() {
     <Card className="bg-backgroundBlack">
       <Title className="text-white">
         Usuarios
-        <Badge className="ml-2 rounded-full bg-slate-600">{users.length}</Badge>
+        <Badge className="ml-2 rounded-full bg-slate-700 text-white">{users.length}</Badge>
       </Title>
       <Table>
         <TableHead>
