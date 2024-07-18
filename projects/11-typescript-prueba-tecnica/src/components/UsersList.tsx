@@ -1,10 +1,11 @@
 import { type User } from "../types.d"
 
 interface Props {
+  showColors: boolean
   users: User[]
 }
 
-export function UserList({ users }: Props) {
+export function UserList({ showColors, users }: Props) {
   return (
     <table width="100%">
       <thead>
@@ -17,9 +18,11 @@ export function UserList({ users }: Props) {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => {
+        {users.map((user, index) => {
+          const style = index % 2 === 0 ? "#333" : "#555"
+          const color = showColors ? style : "transparent"
           return (
-            <tr key={user.id.value}>
+            <tr key={index} style={{ backgroundColor: color }}>
               <td>
                 <img src={user.picture.thumbnail} alt={user.name.title} />
               </td>
