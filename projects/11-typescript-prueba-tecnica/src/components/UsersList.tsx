@@ -6,7 +6,7 @@ interface Props {
 
 export function UserList({ users }: Props) {
   return (
-    <table>
+    <table width="100%">
       <thead>
         <tr>
           <th>Foto</th>
