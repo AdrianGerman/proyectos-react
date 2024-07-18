@@ -28,7 +28,7 @@ function App() {
   }, [])
 
   const sortedUsers = sortByCountry
-    ? [...users].sort((a, b) => {
+    ? users.toSorted((a, b) => {
         return a.location.country.localeCompare(b.location.country)
       })
     : users
