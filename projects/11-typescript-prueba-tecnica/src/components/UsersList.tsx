@@ -1,4 +1,5 @@
 import { type User } from "../types.d"
+import "../App.css"
 
 interface Props {
   deleteUser: (email: string) => void
@@ -18,12 +19,10 @@ export function UserList({ deleteUser, showColors, users }: Props) {
           <th>Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        {users.map((user, index) => {
-          const style = index % 2 === 0 ? "#333" : "#555"
-          const color = showColors ? style : "transparent"
+      <tbody className={showColors ? "table--showColors" : "table"}>
+        {users.map((user) => {
           return (
-            <tr key={user.email} style={{ backgroundColor: color }}>
+            <tr key={user.email}>
               <td>
                 <img src={user.picture.thumbnail} alt={user.name.title} />
               </td>
