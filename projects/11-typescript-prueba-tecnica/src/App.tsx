@@ -10,6 +10,9 @@ function App() {
   const originalUsers = useRef<User[]>([])
   const [filterCountry, setFilterCountry] = useState<string | null>(null)
 
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+
   const toggleColors = () => {
     setShowColors(!showColors)
   }
@@ -33,14 +36,18 @@ function App() {
   }
 
   useEffect(() => {
-    fetch("https://randomuser.me/api?results=100")
-      .then(async (res) => await res.json())
+    setLoading(true)
+    fetch("https://randomuser.me/api?results=10")
+      .then((res) => res.json())
       .then((res) => {
         setUsers(res.results)
         originalUsers.current = res.results
       })
       .catch((err) => {
         console.log(err)
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }, [])
 
