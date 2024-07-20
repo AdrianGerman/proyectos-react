@@ -36,14 +36,19 @@ function App() {
   }
 
   useEffect(() => {
+    setError(false)
     setLoading(true)
     fetch("https://randomuser.me/api?results=10")
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Error en la petición")
+        return await res.json()
+      })
       .then((res) => {
         setUsers(res.results)
         originalUsers.current = res.results
       })
       .catch((err) => {
+        setError(err)
         console.log(err)
       })
       .finally(() => {
@@ -93,12 +98,17 @@ function App() {
           />
         </header>
         <main>
-          <UserList
-            changeSorting={handleChangeSort}
-            deleteUser={handleDelete}
-            showColors={showColors}
-            users={sortedUsers}
-          />
+          {loading && <p>Cargando...</p>}
+          {!loading && error && <p>Ha ocurrido un error inesperado</p>}
+          {!loading && !error && users.length === 0 && <p>No se han encontrado resultados</p>}
+          {!loading && !error && users.length > 0 && (
+            <UserList
+              changeSorting={handleChangeSort}
+              deleteUser={handleDelete}
+              showColors={showColors}
+              users={sortedUsers}
+            />
+          )}
         </main>
       </div>
     </>
