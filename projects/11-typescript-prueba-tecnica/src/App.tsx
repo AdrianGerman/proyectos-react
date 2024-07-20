@@ -9,9 +9,9 @@ function App() {
   const [sorting, setSorting] = useState<SortBy>(SortBy.NONE)
   const originalUsers = useRef<User[]>([])
   const [filterCountry, setFilterCountry] = useState<string | null>(null)
-
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const toggleColors = () => {
     setShowColors(!showColors)
@@ -36,16 +36,19 @@ function App() {
   }
 
   useEffect(() => {
-    setError(false)
     setLoading(true)
-    fetch("https://randomuser.me/api?results=10")
+    setError(false)
+    fetch(`https://randomuser.me/api?results=10&seed=heim&page=${currentPage}`)
       .then(async (res) => {
         if (!res.ok) throw new Error("Error en la petición")
         return await res.json()
       })
       .then((res) => {
-        setUsers(res.results)
-        originalUsers.current = res.results
+        setUsers((prevUsers) => {
+          const newUsers = prevUsers.concat(res.results)
+          originalUsers.current = newUsers
+          return newUsers
+        })
       })
       .catch((err) => {
         setError(err)
@@ -54,7 +57,7 @@ function App() {
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }, [currentPage])
 
   const filteredUsers = useMemo(() => {
     return filterCountry !== null && filterCountry.length > 0
@@ -97,17 +100,21 @@ function App() {
             }}
           />
         </header>
+
         <main>
-          {loading && <p>Cargando...</p>}
-          {!loading && error && <p>Ha ocurrido un error inesperado</p>}
-          {!loading && !error && users.length === 0 && <p>No se han encontrado resultados</p>}
-          {!loading && !error && users.length > 0 && (
+          {users.length > 0 && (
             <UserList
               changeSorting={handleChangeSort}
               deleteUser={handleDelete}
               showColors={showColors}
               users={sortedUsers}
             />
+          )}
+          {loading && <strong>Cargando...</strong>}
+          {!loading && error && <p>Ha ocurrido un error inesperado</p>}
+          {!loading && !error && users.length === 0 && <p>No se han encontrado resultados</p>}
+          {!loading && !error && (
+            <button onClick={() => setCurrentPage(currentPage + 1)}>Cargar más resultados</button>
           )}
         </main>
       </div>
