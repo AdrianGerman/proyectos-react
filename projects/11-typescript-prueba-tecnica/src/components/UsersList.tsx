@@ -1,5 +1,5 @@
 import { SortBy, type User } from "../types.d"
-import "../App.css"
+import "./UsersList.css"
 
 interface Props {
   changeSorting: (sort: SortBy) => void
