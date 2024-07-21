@@ -2,26 +2,39 @@ import { useMemo, useState } from "react"
 import "./App.css"
 import { type User, SortBy } from "./types.d"
 import { UserList } from "./components/UsersList"
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
-const fetchUsers = async (page: number) => {
-  return await fetch(`https://randomuser.me/api?results=10&seed=heim&page=${page}`)
+const fetchUsers = async ({ pageParam = 1 }: { pageParam?: number }) => {
+  return await fetch(`https://randomuser.me/api?results=10&seed=heim&page=${pageParam}`)
     .then(async (res) => {
       if (!res.ok) throw new Error("Error en la petición")
       return await res.json()
     })
-    .then((res) => res.results)
+    .then((res) => {
+      const nextCursor = Number(res.info.page) + 1
+      return {
+        users: res.results,
+        nextCursor
+      }
+    })
 }
 
+// .then((res) => ({
+//   users: res.results,
+//   nextCursor: res.info.page + 1
+// }))
+
 function App() {
-  const {
-    isLoading,
-    isError,
-    data: users = []
-  } = useQuery<User[]>({
+  const { isLoading, isError, data, refetch, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ["users"],
-    queryFn: async () => await fetchUsers(1)
+    queryFn: fetchUsers,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextCursor
   })
+
+  console.log(data)
+  const users: User[] = []
+
   const [showColors, setShowColors] = useState(false)
   const [sorting, setSorting] = useState<SortBy>(SortBy.NONE)
   const [filterCountry, setFilterCountry] = useState<string | null>(null)
@@ -37,7 +50,7 @@ function App() {
   }
 
   const handleReset = () => {
-    // setUsers(originalUsers.current)
+    refetch()
   }
 
   const handleDelete = () => {
@@ -53,8 +66,8 @@ function App() {
   const filteredUsers = useMemo(() => {
     return filterCountry !== null && filterCountry.length > 0
       ? users.filter((user) => {
-          return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
-        })
+        return user.location.country.toLowerCase().includes(filterCountry.toLowerCase())
+      })
       : users
   }, [users, filterCountry])
 
@@ -105,7 +118,7 @@ function App() {
           {!isLoading && isError && <p>Ha ocurrido un error inesperado</p>}
           {!isLoading && !isError && users.length === 0 && <p>No se han encontrado resultados</p>}
           {!isLoading && !isError && (
-            <button onClick={() => setCurrentPage(currentPage + 1)}>Cargar más resultados</button>
+            <button onClick={() => { void fetchNextPage() }}>Cargar más resultados</button>
           )}
         </main>
       </div>
