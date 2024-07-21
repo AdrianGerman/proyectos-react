@@ -3,6 +3,15 @@ import "./App.css"
 import { type User, SortBy } from "./types.d"
 import { UserList } from "./components/UsersList"
 
+const fetchUsers = async (page: number) => {
+  return await fetch(`https://randomuser.me/api?results=10&seed=heim&page=${page}`)
+    .then(async (res) => {
+      if (!res.ok) throw new Error("Error en la petición")
+      return await res.json()
+    })
+    .then((res) => res.results)
+}
+
 function App() {
   const [users, setUsers] = useState<User[]>([])
   const [showColors, setShowColors] = useState(false)
@@ -38,14 +47,11 @@ function App() {
   useEffect(() => {
     setLoading(true)
     setError(false)
-    fetch(`https://randomuser.me/api?results=10&seed=heim&page=${currentPage}`)
-      .then(async (res) => {
-        if (!res.ok) throw new Error("Error en la petición")
-        return await res.json()
-      })
-      .then((res) => {
+
+    fetchUsers(currentPage)
+      .then((users) => {
         setUsers((prevUsers) => {
-          const newUsers = prevUsers.concat(res.results)
+          const newUsers = prevUsers.concat(users)
           originalUsers.current = newUsers
           return newUsers
         })
