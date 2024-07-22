@@ -11,7 +11,8 @@ const fetchUsers = async ({ pageParam = 1 }: { pageParam?: number }) => {
       return await res.json()
     })
     .then((res) => {
-      const nextCursor = Number(res.info.page) + 1
+      const currentPage = Number(res.info.page)
+      const nextCursor = currentPage > 10 ? undefined : currentPage + 1
       return {
         users: res.results,
         nextCursor
@@ -33,7 +34,7 @@ function App() {
   })
 
   console.log('data ----->', data);
-  const users: User[] = data?.pages?.[0].users ?? []
+  const users: User[] = data?.pages?.flatMap(page => page.users) ?? []
 
   const [showColors, setShowColors] = useState(false)
   const [sorting, setSorting] = useState<SortBy>(SortBy.NONE)
@@ -116,7 +117,7 @@ function App() {
           {isLoading && <strong>Cargando...</strong>}
           {!isLoading && isError && <p>Ha ocurrido un error inesperado</p>}
           {!isLoading && !isError && users.length === 0 && <p>No se han encontrado resultados</p>}
-          {!isLoading && !isError && (
+          {!isLoading && !isError && hasNextPage === true && (
             <button onClick={() => { void fetchNextPage() }}>Cargar más resultados</button>
           )}
         </main>
