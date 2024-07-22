@@ -27,3 +27,7 @@ header {
 .filter-input:hover {
   border-color: #646cff;
 }
+
+.button-nextPage {
+  margin-top: 1rem;
+}

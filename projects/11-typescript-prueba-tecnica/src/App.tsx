@@ -93,7 +93,7 @@ function App() {
           {!isLoading && isError && <p>Ha ocurrido un error inesperado</p>}
           {!isLoading && !isError && users.length === 0 && <p>No se han encontrado resultados</p>}
           {!isLoading && !isError && hasNextPage === true && (
-            <button onClick={() => { void fetchNextPage() }}>Cargar más resultados</button>
+            <button className="button-nextPage" onClick={() => { void fetchNextPage() }}>Cargar más resultados</button>
           )}
           {!isLoading && !isError && hasNextPage === false && <p>No hay más resultados</p>}
         </main>
