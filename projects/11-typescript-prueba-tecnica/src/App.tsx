@@ -32,13 +32,12 @@ function App() {
     getNextPageParam: (lastPage) => lastPage.nextCursor
   })
 
-  console.log(data)
-  const users: User[] = []
+  console.log('data ----->', data);
+  const users: User[] = data?.pages?.[0].users ?? []
 
   const [showColors, setShowColors] = useState(false)
   const [sorting, setSorting] = useState<SortBy>(SortBy.NONE)
   const [filterCountry, setFilterCountry] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState(1)
 
   const toggleColors = () => {
     setShowColors(!showColors)
