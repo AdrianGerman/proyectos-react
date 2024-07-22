@@ -1,40 +1,14 @@
 import { useMemo, useState } from "react"
-import "./App.css"
-import { type User, SortBy } from "./types.d"
 import { UserList } from "./components/UsersList"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { useUsers } from "./hook/useUsers"
+import { type User, SortBy } from "./types.d"
+import "./App.css"
+import { Results } from "./components/Results"
 
-const fetchUsers = async ({ pageParam = 1 }: { pageParam?: number }) => {
-  return await fetch(`https://randomuser.me/api?results=10&seed=heim&page=${pageParam}`)
-    .then(async (res) => {
-      if (!res.ok) throw new Error("Error en la petición")
-      return await res.json()
-    })
-    .then((res) => {
-      const currentPage = Number(res.info.page)
-      const nextCursor = currentPage > 10 ? undefined : currentPage + 1
-      return {
-        users: res.results,
-        nextCursor
-      }
-    })
-}
-
-// .then((res) => ({
-//   users: res.results,
-//   nextCursor: res.info.page + 1
-// }))
 
 function App() {
-  const { isLoading, isError, data, refetch, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ["users"],
-    queryFn: fetchUsers,
-    initialPageParam: 1,
-    getNextPageParam: (lastPage) => lastPage.nextCursor
-  })
+  const { isLoading, isError, users, refetch, fetchNextPage, hasNextPage } = useUsers()
 
-  console.log('data ----->', data);
-  const users: User[] = data?.pages?.flatMap(page => page.users) ?? []
 
   const [showColors, setShowColors] = useState(false)
   const [sorting, setSorting] = useState<SortBy>(SortBy.NONE)
@@ -90,6 +64,7 @@ function App() {
     <>
       <div>
         <h1>Prueba técnica</h1>
+        <Results />
         <header>
           <button onClick={toggleColors}>Colorear filas</button>
           <button onClick={toggleSortByCountry}>
@@ -120,6 +95,7 @@ function App() {
           {!isLoading && !isError && hasNextPage === true && (
             <button onClick={() => { void fetchNextPage() }}>Cargar más resultados</button>
           )}
+          {!isLoading && !isError && hasNextPage === false && <p>No hay más resultados</p>}
         </main>
       </div>
     </>
