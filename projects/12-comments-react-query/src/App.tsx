@@ -1,15 +1,29 @@
+import { useQuery } from "@tanstack/react-query"
+import { getComments, type CommentWidthId } from "./services/comments"
+import { FormInput, FormTextArea } from "./components/Form"
+import { Results } from "./components/Results"
 import "./App.css"
 
-import { FormInput, FormTextArea } from "./components/Form"
-
 function App() {
+  const { data, isLoading, error } = useQuery<CommentWidthId[]>({
+    queryKey: ["comments"],
+    queryFn: getComments
+  })
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+  }
+
   return (
     <>
-      <h1 className="text-3xl font-bold underline">React query</h1>
-      <main>
-        <div className="col-span-1 bg-white p-8">{/* aqui se van a mostrar los comentarios */}</div>
+      <main className="grid h-screen grid-cols-2">
+        <div className="col-span-1 bg-white p-8">
+          {isLoading && <strong>Cargando....</strong>}
+          {error !== null && <strong>Upss, algo no ha salido del todo bien :o</strong>}
+          <Results data={data} />
+        </div>
         <div className="col-span-1 bg-black p-8">
-          <form className="max-w-xl m-auto block px-4">
+          <form className="max-w-xl m-auto block px-4" onSubmit={handleSubmit}>
             <FormInput />
             <FormTextArea />
             <button

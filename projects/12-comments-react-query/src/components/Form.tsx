@@ -2,7 +2,7 @@ export const FormInput = ({ ...props }) => (
   <div className="mb-6">
     <label
       htmlFor="default-input"
-      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      className="block mb-2 text-xl font-medium text-gray-900 dark:text-white"
     >
       Introduce el titulo
     </label>
