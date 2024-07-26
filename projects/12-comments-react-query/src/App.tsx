@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getComments, postComment, type CommentWidthId } from "./services/comments"
 import { FormInput, FormTextArea } from "./components/Form"
 import { Results } from "./components/Results"
@@ -10,9 +10,35 @@ function App() {
     queryFn: getComments
   })
 
+  const queryClient = useQueryClient()
+
   // aquí se usaría usLoading pero en la v5 fue cambiado a isPending
   const { mutate, isPending: isLoadingMutation } = useMutation({
-    mutationFn: postComment
+    mutationFn: postComment,
+    onMutate: async (newComment) => {
+      await queryClient.cancelQueries({ queryKey: ["comments"] })
+
+      const previousComments = queryClient.getQueryData(["comments"])
+
+      queryClient.setQueryData(["comments"], (oldData?: Comment[]) => {
+        if (oldData == null) return [newComment]
+        return [...oldData, newComment]
+      })
+      return { previousComments }
+    },
+
+    onError: (error, variables, context) => {
+      console.error(error)
+      if (context?.previousComments !== null) {
+        queryClient.setQueryData(["comments"], context?.previousComments)
+      }
+    },
+
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["comments"]
+      })
+    }
   })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
