@@ -10,11 +10,13 @@ function App() {
     queryFn: getComments
   })
 
-  const { mutate } = useMutation({
+  // aquí se usaría usLoading pero en la v5 fue cambiado a isPending
+  const { mutate, isPending: isLoadingMutation } = useMutation({
     mutationFn: postComment
   })
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    if (isLoadingMutation) return
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     const message = data.get("message")?.toString() ?? ""
@@ -34,14 +36,18 @@ function App() {
           <Results data={data} />
         </div>
         <div className="col-span-1 bg-black p-8">
-          <form className="max-w-xl m-auto block px-4" onSubmit={handleSubmit}>
+          <form
+            className={`${isLoadingMutation ? "opacity-40" : ""} block max-w-xl px-4 m-auto`}
+            onSubmit={handleSubmit}
+          >
             <FormInput />
             <FormTextArea />
             <button
+              disabled={isLoadingMutation}
               type="submit"
               className="mt-4 px-12 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm py-2.5 text-center mr-2 mb-2"
             >
-              Enviar comentario
+              {isLoadingMutation ? "Enviando comentario..." : "Enviar comentario"}
             </button>
           </form>
         </div>

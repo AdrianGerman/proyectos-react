@@ -7,8 +7,6 @@ export interface CommentWidthId extends Comment {
   id: string
 }
 
-console.log(import.meta.env.VITE_API_KEY)
-
 export const getComments = async () => {
   const response = await fetch("https://api.jsonbin.io/v3/b/66a28152e41b4d34e416fc3e", {
     method: "GET",
@@ -36,7 +34,7 @@ export const postComment = async (comment: Comment) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "X-Access-Key": import.meta.env.VITE_PUBLIC_API_KEY
+      "X-Access-Key": import.meta.env.VITE_API_KEY
     },
     body: JSON.stringify(commentsToSave)
   })
