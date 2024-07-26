@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query"
-import { getComments, type CommentWidthId } from "./services/comments"
+import { useQuery, useMutation } from "@tanstack/react-query"
+import { getComments, postComment, type CommentWidthId } from "./services/comments"
 import { FormInput, FormTextArea } from "./components/Form"
 import { Results } from "./components/Results"
 import "./App.css"
@@ -10,8 +10,19 @@ function App() {
     queryFn: getComments
   })
 
+  const { mutate } = useMutation({
+    mutationFn: postComment
+  })
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    const data = new FormData(event.currentTarget)
+    const message = data.get("message")?.toString() ?? ""
+    const title = data.get("title")?.toString() ?? ""
+
+    if (title !== "" && message !== "") {
+      mutate({ title, message })
+    }
   }
 
   return (
