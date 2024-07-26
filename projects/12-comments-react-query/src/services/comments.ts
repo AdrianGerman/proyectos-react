@@ -1,9 +1,11 @@
 export interface Comment {
+  preview: boolean
   title: string
   message: string
 }
 
 export interface CommentWidthId extends Comment {
+  preview: boolean
   id: string
 }
 

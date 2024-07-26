@@ -52,7 +52,7 @@ function App() {
     const title = data.get("title")?.toString() ?? ""
 
     if (title !== "" && message !== "") {
-      mutate({ title, message })
+      mutate({ title, message, preview: false })
     }
   }
 
