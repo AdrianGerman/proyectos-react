@@ -21,13 +21,16 @@ function App() {
       const previousComments = queryClient.getQueryData(["comments"])
 
       queryClient.setQueryData(["comments"], (oldData?: Comment[]) => {
-        if (oldData == null) return [newComment]
-        return [...oldData, newComment]
+        const newCommentToAdd = structuredClone(newComment)
+        newCommentToAdd.preview = true
+
+        if (oldData == null) return [newCommentToAdd]
+        return [...oldData, newCommentToAdd]
       })
       return { previousComments }
     },
 
-    onError: (error, variables, context) => {
+    onError: (error, _variables, context) => {
       console.error(error)
       if (context?.previousComments !== null) {
         queryClient.setQueryData(["comments"], context?.previousComments)
