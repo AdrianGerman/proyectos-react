@@ -3,6 +3,7 @@ import { JavaScriptLogo } from "./JavaScriptLogo"
 import "./App.css"
 import { Start } from "./Start"
 import { useQuestionsStore } from "./store/question"
+import { Game } from "./Game"
 
 function App() {
   const questions = useQuestionsStore((state) => state.questions)
@@ -19,7 +20,7 @@ function App() {
         </Stack>
 
         {questions.length === 0 && <Start />}
-        {questions.length > 0 && <h4>El juego a comenzado</h4>}
+        {questions.length > 0 && <Game />}
       </Container>
     </>
   )
