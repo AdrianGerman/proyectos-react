@@ -5,5 +5,5 @@ export interface Question {
   answers: string[]
   correctAnswer: number
   userSelectedAnswer?: number
-  inCorrectUserAnswer?: boolean
+  isCorrectUserAnswer?: boolean
 }
