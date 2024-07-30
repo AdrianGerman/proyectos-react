@@ -18,9 +18,10 @@ function App() {
             JavaScript Quizz
           </Typography>
         </Stack>
-
-        {questions.length === 0 && <Start />}
-        {questions.length > 0 && <Game />}
+        <div style={{ marginTop: "16px" }}>
+          {questions.length === 0 && <Start />}
+          {questions.length > 0 && <Game />}
+        </div>
       </Container>
     </>
   )
